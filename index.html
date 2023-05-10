@@ -1,1 +1,55 @@
-hello world
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>My Page</title>
+  </head>
+  <body>
+    <h1>Fill in the Box</h1>
+    <p>Enter your name:</p>
+    <input type="text" id="outdoorTemp" placeholder="outdoor temp" />
+    <input type="text" id="indoorTemp" placeholder="indoor temp" />
+
+    <input type="text" id="outdoorHumidity" placeholder="outdoor humidity" />
+    <input type="text" id="indoorHumidity" placeholder="indoor humidity" />
+
+    <button onclick="submitName()">Submit</button>
+    <br></br>
+    <p>The indoor sat value is: <span id="indoorsat">0</span></p>
+    <p>The indoor humidity value is: <span id="indoorhum">0</span></p>
+
+
+    <script>
+      function submitName() {
+        var outdoorTemp = document.getElementById("outdoorTemp").value;
+        var indoorHumidity = document.getElementById("indoorHumidity").value;
+        var outdoorHumidity = document.getElementById("outdoorHumidity").value;
+        var indoorTemp = document.getElementById("indoorTemp").value;
+
+        // let ktemp = convertToKelvin(outdoorTemp)
+        
+        let outsideSat = getSaturationDensity(outdoorTemp)
+        let outsideMoisture = outdoorHumidity * (outsideSat/100)
+        let indoorsat = getSaturationDensity(indoorTemp)
+        indoorHumidity = outsideMoisture / indoorsat * 100
+
+        document.getElementById("indoorsat").innerHTML = indoorsat
+        document.getElementById("indoorhum").innerHTML = indoorHumidity.toFixed(2) + "%"
+
+        // alert("outsidesat = , " + outsideSat + " and outside moisture =" + outsideMoisture);
+      }
+
+
+
+      // function convertToKelvin(tempF){
+      //   return (tempF - 32) * 5/9 + 273.15
+      // }
+
+      function getSaturationDensity(currentTempinC){
+
+        let t = currentTempinC
+        return 5.018 + .32321 * t + (8.1847 * 10 ** -3) * t ** 2
+        + (3.1243 * 10 ** -4) * t **3
+      }
+    </script>
+  </body>
+</html>
